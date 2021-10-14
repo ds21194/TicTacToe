@@ -1,0 +1,35 @@
+.leaderboard {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    height: 100px;
+    width: 300px;
+}
+
+.leaderboard .player {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.leaderboard .player + .player {
+    margin-left: 1px;
+}
+
+.player {
+    background-color: #bdc3c7;
+}
+
+.player .name {
+    font: 24px 'Myriad Pro', 'Arial';
+    color: #FFF;
+}
+
+.player.winner {
+    background-color: #f1c40f;
+}
+
+.player.current {
+    background-color: #1abc9c;
+}
