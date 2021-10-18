@@ -1,6 +1,6 @@
 
-import Leaderboard from "./Components/Leaderboard";
-import Board from "./Components/Board";
+import Leaderboard from "./components1/Leaderboard";
+import Board from "./components1/Board";
 
 import './App.css';
 

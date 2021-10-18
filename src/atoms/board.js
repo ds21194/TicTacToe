@@ -1,4 +1,5 @@
 import {atom, selector, useRecoilState, useSetRecoilState} from "recoil";
+import { hasWinner } from "../gameLogic";
 
 export const boardState = atom({
     key: 'board',
@@ -26,9 +27,11 @@ export const turnState = atom({
 export const winner = selector({
     key: 'winner',
     get: ({get})=>{
-        // TODO: access to atom board
+        const board = get(boardState);
+        const player = get(turnState);
+
         // return winner
-        return null;
+        return hasWinner(board, player);
     }
 });
 
