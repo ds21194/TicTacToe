@@ -1,4 +1,4 @@
-import { hasWinner } from './winning'
+import { getWinningStrike, isBoardFull } from './winning'
 
 
-export { hasWinner };
+export { getWinningStrike, isBoardFull };

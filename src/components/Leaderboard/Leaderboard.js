@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from "classnames";
 import { useRecoilValue } from 'recoil'
-import { players, turnState, winner } from '../../atoms/board';
+import { playersState, turnState, winner } from '../../atoms/board';
 
 import './Leaderboard.css'
 
@@ -20,7 +20,7 @@ const Player = ({mark}) => {
 };
 
 const Leaderboard = () => {
-    const gamePlayers = useRecoilValue(players);
+    const gamePlayers = useRecoilValue(playersState);
 
     return (
         <div className='leaderboard'>
