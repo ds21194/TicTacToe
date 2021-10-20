@@ -1,8 +1,8 @@
 const arraySum = (arr) => arr.reduce((sum, curr)=> sum+curr, 0);
 
-const getRowsSum = (board) => board.map(row=>arraySum(row));
+// const getRowsSum = (board) => board.map(row=>arraySum(row));
 
-const rotate = (board) => board.map((row, i)=>row.map((col, j)=>board[j][i]));
+// const rotate = (board) => board.map((row, i)=>row.map((col, j)=>board[j][i]));
 
 const extractDiagonal = (board) => board.map((row, i)=>board[i][i]);
 

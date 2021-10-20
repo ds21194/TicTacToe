@@ -1,6 +1,12 @@
 import {useRecoilCallback} from "recoil";
 import {setIn} from 'immutable'
-import {turnState, playersState, boardState, lastPlayed} from "../atoms/board";
+import {
+    turnState,
+    playersState,
+    boardState,
+    lastPlayed,
+    leaderboardState
+} from "../atoms/board";
 
 const useMarker = (x, y) => {
 
@@ -23,6 +29,8 @@ const useMarker = (x, y) => {
             y,
             marker: currentPlayer
         })
+
+        // set(leaderboardState)
 
     }, [x, y]);
 

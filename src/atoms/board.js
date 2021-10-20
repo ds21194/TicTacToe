@@ -1,4 +1,4 @@
-import {atom, selector, useRecoilState, useSetRecoilState} from "recoil";
+import {atom, selector} from "recoil";
 import { getWinningStrike, isBoardFull } from "../gameLogic";
 
 export const boardState = atom({
@@ -32,20 +32,40 @@ export const lastPlayed = atom({
     }
 });
 
-
 export const winner = selector({
     key: 'winner',
-    get: ({get})=>{
+    get: ({get, getCallback})=>{
         const board = get(boardState);
         const play = get(lastPlayed);
+        const currWinner = get(winnerState);
 
-        // return winner
+        let gameWinner = null;
         if (getWinningStrike(board, play['marker'], play['y'], play['x'])) {
-            return play['marker'];
+            gameWinner = play['marker'];
         }
+        const updateLeaderboard = getCallback(({set})=>{
+            if(gameWinner !== null)
+                set(leaderboardState, leaderboard=>({
+                    ...leaderboard,
+                    [gameWinner]: leaderboard[gameWinner] + 1
+                }));
+        });
 
-        return null;
+        return gameWinner;
+    },
+    set: ({set, get}, gameWinner)=>{
+        const leaderboard = get(leaderboardState);
+        set(leaderboardState, {
+            ...leaderboard,
+            [gameWinner]: leaderboard[gameWinner] + 1
+        });
+        set(winnerState, gameWinner);
     }
+});
+
+export const winnerState = atom({
+    key: 'winnerState',
+    default: null
 });
 
 export const hasTie = selector({
@@ -56,10 +76,20 @@ export const hasTie = selector({
     }
 });
 
-export const leaderboard = selector({
-    key: 'leaderboard',
+const leaderboardValue = selector({
+    key: 'leaderboardValue',
     get: ({get})=>{
         const players = get(playersState);
-        return players.reduce((score, player)=> score[player]=0, {})
+        console.log("players: ", players);
+
+        return players.reduce((result, player) => ({
+            ...result,
+            [player]: 0
+        }), {})
     }
+});
+
+export const leaderboardState = atom({
+    key: 'leaderboardState',
+    default: leaderboardValue
 });

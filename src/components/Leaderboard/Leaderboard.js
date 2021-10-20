@@ -1,19 +1,34 @@
 import React from 'react';
 import classNames from "classnames";
-import { useRecoilValue } from 'recoil'
-import { playersState, turnState, winner } from '../../atoms/board';
-
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { playersState, turnState, winner, leaderboardState } from '../../atoms/board';
+import { useEffect } from 'react'
+import useLeaderboard from "../../hooks/useLeaderboard";
 import './Leaderboard.css'
 
 const Player = ({mark}) => {
 
     const currentPlayer = useRecoilValue(turnState);
-    const gameWinner = useRecoilValue(winner);
+    const [gameWinner, setGameWinner] = useRecoilState(winner);
+
+    const [leaderboard, updateLeaderboard] = useLeaderboard();
+
+    useEffect(()=>{
+        updateLeaderboard();
+    }, [updateLeaderboard]);
+
+    const playerClasses = classNames('player', {
+        current: mark === currentPlayer && ! gameWinner,
+        winner: gameWinner === mark
+    });
 
     return (
-        <div className={classNames('player', {current: mark === currentPlayer, winner: gameWinner === mark })}>
+        <div className={playerClasses}>
             <span className='name'>
                 {mark}
+            </span>
+            <span className='name score'>
+                {leaderboard[mark]}
             </span>
         </div>
     )
@@ -24,8 +39,8 @@ const Leaderboard = () => {
 
     return (
         <div className='leaderboard'>
-            {gamePlayers.map(player=>(
-                <Player mark={player} />
+            {gamePlayers.map((player, index)=>(
+                <Player key={index} mark={player} />
             ))}
         </div>
     )

@@ -11,6 +11,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 .leaderboard .player + .player {
@@ -24,6 +25,12 @@
 .player .name {
     font: 24px 'Myriad Pro', 'Arial';
     color: #FFF;
+}
+
+.player .name.score {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
 }
 
 .player.winner {
