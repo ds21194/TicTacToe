@@ -40,3 +40,6 @@
 .player.current {
     background-color: #1abc9c;
 }
+.player.tie {
+    background-color: #ecf0f1;
+}

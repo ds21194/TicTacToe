@@ -37,30 +37,15 @@ export const winner = selector({
     get: ({get, getCallback})=>{
         const board = get(boardState);
         const play = get(lastPlayed);
-        const currWinner = get(winnerState);
+        // const currWinner = get(winnerState);
 
-        let gameWinner = null;
+        // let gameWinner = null;
         if (getWinningStrike(board, play['marker'], play['y'], play['x'])) {
-            gameWinner = play['marker'];
+            return  play['marker'];
         }
-        const updateLeaderboard = getCallback(({set})=>{
-            if(gameWinner !== null)
-                set(leaderboardState, leaderboard=>({
-                    ...leaderboard,
-                    [gameWinner]: leaderboard[gameWinner] + 1
-                }));
-        });
 
-        return gameWinner;
+        return null;
     },
-    set: ({set, get}, gameWinner)=>{
-        const leaderboard = get(leaderboardState);
-        set(leaderboardState, {
-            ...leaderboard,
-            [gameWinner]: leaderboard[gameWinner] + 1
-        });
-        set(winnerState, gameWinner);
-    }
 });
 
 export const winnerState = atom({
@@ -93,3 +78,5 @@ export const leaderboardState = atom({
     key: 'leaderboardState',
     default: leaderboardValue
 });
+
+

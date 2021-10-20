@@ -1,24 +1,44 @@
 import React from 'react';
 import classNames from "classnames";
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { playersState, turnState, winner, leaderboardState } from '../../atoms/board';
+import {
+    playersState,
+    turnState,
+    winner,
+    leaderboardState,
+    hasTie
+} from '../../atoms/board';
+
 import { useEffect } from 'react'
+import usePrevious  from '../../hooks/usePrevious'
 import useLeaderboard from "../../hooks/useLeaderboard";
 import './Leaderboard.css'
 
 const Player = ({mark}) => {
 
     const currentPlayer = useRecoilValue(turnState);
-    const [gameWinner, setGameWinner] = useRecoilState(winner);
+    const gameWinner = useRecoilValue(winner);
+    // const hasTie = useRecoilValue(hasTie);
 
-    const [leaderboard, updateLeaderboard] = useLeaderboard();
+    const [leaderboard, setLeaderboard] = useRecoilState(leaderboardState);
+
+    const prevWinner = usePrevious(gameWinner);
+
+    console.log("prev: ", prevWinner);
+    console.log("current winner: ", gameWinner);
+    console.log("condition evalutate to: ", gameWinner && !prevWinner);
 
     useEffect(()=>{
-        updateLeaderboard();
-    }, [updateLeaderboard]);
+        if(gameWinner && !prevWinner){
+            setLeaderboard(({
+                ...leaderboard,
+                [gameWinner]: leaderboard[gameWinner] + 1
+            }));
+        }
+    }, [prevWinner, gameWinner]);
 
     const playerClasses = classNames('player', {
-        current: mark === currentPlayer && ! gameWinner,
+        current: mark === currentPlayer && !gameWinner,
         winner: gameWinner === mark
     });
 
