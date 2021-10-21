@@ -9,9 +9,14 @@
     grid-gap: 1px;
 }
 
+
 .board .square {
     background-color: #ecf0f1;
     border: 2px solid #bdc3c7;
+}
+
+.board .square :hover{
+    background-color: #fff;
 }
 
 .board .square button {
@@ -21,5 +26,7 @@
     border: none;
     color: #000;
 }
+
+
 
 

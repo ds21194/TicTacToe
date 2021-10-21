@@ -57,7 +57,9 @@ export const hasTie = selector({
     key: 'hasTie',
     get: ({get}) => {
         const board = get(boardState);
-        return isBoardFull(board)
+        const gameWinner = get(winner);
+        console.log(board);
+        return isBoardFull(board) && !gameWinner
     }
 });
 

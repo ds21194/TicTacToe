@@ -1,7 +1,7 @@
 import React from "react"
 import { useRecoilValue } from 'recoil'
 import useTicTacToe from '../../hooks/useTicTacToe'
-import { boardState, winner } from "../../atoms/board"
+import {boardState, hasTie, winner} from "../../atoms/board"
 
 import Square from "./Square";
 
@@ -12,16 +12,18 @@ const Board = () => {
     const board = useRecoilValue(boardState);
     const gameWinner = useRecoilValue(winner);
     const [newGame, forfeit] = useTicTacToe();
+    const tie = useRecoilValue(hasTie);
 
     const hasWinner = gameWinner !== null;
 
-    const onNewGame = () => {hasWinner ? newGame(gameWinner) : forfeit()};
+    const showNewGame = hasWinner || tie;
+    const onNewGame = () => {showNewGame ? newGame() : forfeit()};
 
     const boardWidth = board[0].length;
 
     return (
         <>
-            <button onClick={onNewGame}> {hasWinner ? "New Game" : "Forfeit"} </button>
+            <button onClick={onNewGame}> {showNewGame ? "New Game" : "Forfeit"} </button>
             <div className='board'>
                 {board.map((row, rowIndex)=>(
                     <React.Fragment key={rowIndex}>

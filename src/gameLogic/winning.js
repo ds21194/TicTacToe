@@ -46,9 +46,7 @@ export const getWinningStrike = (board, player, i, j) => {
     return null
 };
 
-export const isBoardFull = (board) => board.reduce(
-    (rowAc, currRow)=>currRow.reduce(
-        (colAc, currCol)=>colAc && currCol, true
-    ) && currRow, true
+export const isBoardFull = (board) => board.reduce((rowAc, currRow)=>currRow.reduce(
+    (colAc, currCol)=>colAc && !!currCol, true) && rowAc, true
 );
 

@@ -5,6 +5,8 @@ import { useRecoilValue } from "recoil";
 import {boardState, winner} from "../../atoms/board";
 import useMarker from "../../hooks/useMarker";
 
+import './Board.css'
+
 const Square = ( { x, y }) => {
 
     const board = useRecoilValue(boardState);

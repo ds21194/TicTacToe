@@ -1,4 +1,4 @@
-import {useRecoilCallback, useRecoilValue} from "recoil";
+import {useRecoilCallback, useRecoilValue, useRecoilState} from "recoil";
 // import {Map} from 'immutable'
 import {useCallback} from 'react'
 
@@ -6,17 +6,16 @@ import {
     turnState,
     lastPlayed,
     boardState,
-    leaderboardState, playersState
+    leaderboardState
 } from "../atoms/board";
 
 
 const useTicTacToe = () => {
     const lastPlayedMarker = useRecoilValue(lastPlayed)['marker'];
+    const [leaderboard, setLeaderboard] = useRecoilState(leaderboardState);
 
     // new game
-    const newGame = useRecoilCallback(({set, snapshot, reset})=>(winner)=>{
-        console.log("winner is: ", winner);
-
+    const newGame = useRecoilCallback(({set, snapshot, reset})=>()=>{
         // set(leaderboardState, (leaderboard) => ({
         //     ...leaderboard,
         //     [winner]: leaderboard[winner] + 1
@@ -29,9 +28,14 @@ const useTicTacToe = () => {
 
     // new game + set winner
     const forfeit = useCallback(() => {
-        newGame(lastPlayedMarker)
+        newGame();
 
-    }, [lastPlayedMarker, newGame]);
+        setLeaderboard({
+            ...leaderboard,
+            [lastPlayedMarker]: leaderboard[lastPlayedMarker] + 1
+        });
+
+    }, [lastPlayedMarker]);
 
     return [newGame, forfeit]
 };

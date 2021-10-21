@@ -4,8 +4,7 @@ import {
     turnState,
     playersState,
     boardState,
-    lastPlayed,
-    leaderboardState
+    lastPlayed
 } from "../atoms/board";
 
 const useMarker = (x, y) => {
@@ -29,8 +28,6 @@ const useMarker = (x, y) => {
             y,
             marker: currentPlayer
         })
-
-        // set(leaderboardState)
 
     }, [x, y]);
 

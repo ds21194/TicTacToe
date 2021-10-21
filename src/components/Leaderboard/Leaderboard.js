@@ -11,22 +11,17 @@ import {
 
 import { useEffect } from 'react'
 import usePrevious  from '../../hooks/usePrevious'
-import useLeaderboard from "../../hooks/useLeaderboard";
 import './Leaderboard.css'
 
 const Player = ({mark}) => {
 
     const currentPlayer = useRecoilValue(turnState);
     const gameWinner = useRecoilValue(winner);
-    // const hasTie = useRecoilValue(hasTie);
+    const tie = useRecoilValue(hasTie);
 
     const [leaderboard, setLeaderboard] = useRecoilState(leaderboardState);
 
     const prevWinner = usePrevious(gameWinner);
-
-    console.log("prev: ", prevWinner);
-    console.log("current winner: ", gameWinner);
-    console.log("condition evalutate to: ", gameWinner && !prevWinner);
 
     useEffect(()=>{
         if(gameWinner && !prevWinner){
@@ -39,7 +34,8 @@ const Player = ({mark}) => {
 
     const playerClasses = classNames('player', {
         current: mark === currentPlayer && !gameWinner,
-        winner: gameWinner === mark
+        winner: gameWinner === mark,
+        tie: tie
     });
 
     return (
